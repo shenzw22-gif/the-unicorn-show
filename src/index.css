@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  /* Design tokens from THE UNICORN SHOW .ardot file */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #111111;
+  --color-bg-card: #161616;
+  --color-accent-gold: #c9a96e;
+  --color-accent-gold-light: #d4bc8c;
+  --color-text-primary: #f5f5f0;
+  --color-text-secondary: #9a9a94;
+  --color-border-color: #2a2a2a;
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Display / headings — serif */
+  .font-primary {
+    font-family: "Noto Serif SC", "Songti SC", serif;
+  }
+
+  /* Body — sans-serif */
+  .font-secondary {
+    font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+
+  /* Scroll reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
