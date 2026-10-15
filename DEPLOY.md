@@ -51,15 +51,30 @@ export GH_CONFIG_DIR="$HOME/.config/gh-nokeychain"
 
 ## 第一步：创建远程仓库并推送（已完成）
 
+仓库地址：https://github.com/shenzw22-gif/the-unicorn-show（public）
+
 ```bash
 cd /Users/studio2/WorkBuddy/2026-08-13-11-31-35/unicorn-show-app
 gh repo create the-unicorn-show --public --source=. --remote=origin --push
 ```
 
-日常推送只需：
+### 日常推送：用封装好的脚本
+
+因为本机钥匙串受限，`git push` 直连会失败。用项目根目录的 `push.sh`：
 
 ```bash
-git push
+./push.sh                  # 自动提交全部改动并推送
+./push.sh "修复联系表单样式"   # 带提交信息
+```
+
+脚本会自动检测未跟踪文件、生成提交、读取 token 推送，并在输出中隐去凭据。
+
+若偏好手动操作，token 注入方式为：
+
+```bash
+export GH_CONFIG_DIR="$HOME/.config/gh-nokeychain"
+TOKEN=$(grep -m1 'oauth_token:' "$GH_CONFIG_DIR/hosts.yml" | sed 's/.*oauth_token:[[:space:]]*//')
+git push "https://x-access-token:${TOKEN}@github.com/shenzw22-gif/the-unicorn-show.git" main
 ```
 
 ## 第二步：部署到 Vercel
