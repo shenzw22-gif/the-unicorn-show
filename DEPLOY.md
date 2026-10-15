@@ -10,10 +10,11 @@
 
 ## 当前状态（2026-10-16）
 
-- Git 仓库已初始化，分支 `main`，2 次提交
+- Git 仓库已初始化，分支 `main`，3 次提交
 - 生产构建已验证通过（`npm run build`）
 - 本地开发服务器运行于 http://localhost:5173/
-- GitHub 远程仓库：**尚未创建**（需登录后执行）
+- **已推送到 GitHub**：https://github.com/shenzw22-gif/the-unicorn-show（public）
+- Vercel 部署：**尚未执行**
 
 ## 技术栈
 
@@ -33,35 +34,39 @@ npm run preview  # 本地预览生产构建
 npm run typecheck# 类型检查，不产出文件
 ```
 
-## 第一步：登录 GitHub
+## 环境说明：gh 的凭据路径
 
-本机已安装 `gh`（位于 `/Users/studio2/.local/bin/gh`），但尚未登录。
-
-```bash
-export PATH="/Users/studio2/.local/bin:$PATH"
-gh auth login
-```
-
-选择：`GitHub.com` → `HTTPS` → `Yes`(登录浏览器) 。
-
-若希望 `gh` 全局可用，把这行加入 `~/.zshrc`：
+本机沙箱无法写入 macOS 系统钥匙串，因此 `gh` 使用独立配置目录，
+该设置已写入 `~/.zshrc`，新终端自动生效：
 
 ```bash
-echo 'export PATH="/Users/studio2/.local/bin:$PATH"' >> ~/.zshrc
+export PATH="$HOME/.local/bin:$PATH"
+export GH_CONFIG_DIR="$HOME/.config/gh-nokeychain"
 ```
 
-## 第二步：创建远程仓库并推送
+凭据存放于 `$GH_CONFIG_DIR/hosts.yml`。若该变量丢失，`gh` 会退回默认路径
+并报"未登录"，重新export 即可。
+
+当前已登录账号：`shenzw22-gif`，token 权限 `repo` / `read:org` / `gist`。
+
+## 第一步：创建远程仓库并推送（已完成）
 
 ```bash
 cd /Users/studio2/WorkBuddy/2026-08-13-11-31-35/unicorn-show-app
 gh repo create the-unicorn-show --public --source=. --remote=origin --push
 ```
 
-## 第三步：部署到 Vercel
+日常推送只需：
+
+```bash
+git push
+```
+
+## 第二步：部署到 Vercel
 
 1. 访问 https://vercel.com 用 GitHub 账号登录
-2. `Add New...` → `Project` → 导入 `the-unicorn-show` 仓库
-3. 框架自动识别为 Vite，无需改动
+2. `Add New...` → `Project` → 导入 `shenzw22-gif/the-unicorn-show`
+3. 框架自动识别为 Vite，构建命令与输出目录无需改动
 4. `Deploy`
 
 ### 绑定自定义域名 alan.livestudio2.com
